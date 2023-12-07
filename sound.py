@@ -2,6 +2,7 @@ import time
 import numpy as np
 import pyaudio
 import scipy
+import images
 
 oscillators = [None]
 
@@ -59,10 +60,11 @@ class Wave:
                2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(
                np.float32)
        if self.type == "triangle":
-           wave = self.phase * scipy.signal.sawtooth(2 * np.pi * t * self.frequency * self.duration).astype(np.float32)
+           wave = self.phase * scipy.signal.sawtooth(2 * np.pi * t * self.frequency * self.duration, 0.5).astype(np.float32)
            samples = self.phase * scipy.signal.sawtooth(
                2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(
                np.float32)
+       images.wavePlot(t, wave)
        output_bytes = (self.volume * samples).tobytes()
        p = pyaudio.PyAudio()
 
@@ -73,44 +75,38 @@ class Wave:
 
        start_time = time.time()
        stream.write(output_bytes)
+       '''
        stream.stop_stream()
-       stream.close()
-
-   def print(self):
-       print(self.phase, self.frequency, self.type)
-
-
-
+       stream.close() '''
 
 #functions that are called upon pressing buttons in the GUI
 
 def changeVolume(change):
     attributesDict["volume"] = float(change) * 0.01
-    updateOsc1()
-    print(attributesDict["volume"])
+    updateOsc()
+
 
 def hitNote(f):
     attributesDict["frequency"] = noteDict[f]
-    updateOsc1()
+    updateOsc()
     for i in oscillators:
         Wave.calcWave(i)
 
-def updateOsc1():
+def updateOsc():
     osc1 = Wave(**attributesDict)
     oscillators[0] = osc1
 
-def menuOneHit(type):
+def menuHit(type):
     attributesDict["type"] = str(type)
-    updateOsc1()
+    updateOsc()
 
-
+'''
 def menuTwoHit(type):
     attributesDict["type"] = str(type)
     osc2 = Wave(**attributesDict)
     oscillators.append(osc2)
 
-
 def menuThreeHit(type):
     attributesDict["type"] = str(type)
     osc3 = Wave(**attributesDict)
-    oscillators.append(osc3)
+    oscillators.append(osc3) '''
