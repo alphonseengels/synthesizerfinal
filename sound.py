@@ -32,7 +32,6 @@ attributesDict = {"volume": 0.5,
 interval = 1.0/attributesDict["sampleRate"]
 t = np.arange(0,1,interval)
 
-
 #class of objects that will be the oscillators
 class Wave:
    def __init__(self, volume, sampleRate, duration, frequency, phase, type):
@@ -43,41 +42,29 @@ class Wave:
        self.phase = phase
        self.type = type
 
+#actually calculates and samples the waveform
    def calcWave(self):
-       if self.type == "sine":
-           wave = self.phase * np.sin(2 * np.pi * t * self.frequency * self.duration).astype(np.float32)
-           samples = self.phase * np.sin(
-               2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(
-               np.float32)
-       if self.type == "square":
-           wave = self.phase * scipy.signal.square(2 * np.pi * t * self.frequency * self.duration).astype(np.float32)
-           samples = self.phase * scipy.signal.square(
-               2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(
-               np.float32)
-       if self.type == "saw":
-           wave = self.phase * scipy.signal.sawtooth(2 * np.pi * t * self.frequency * self.duration).astype(np.float32)
-           samples = self.phase * scipy.signal.sawtooth(
-               2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(
-               np.float32)
-       if self.type == "triangle":
-           wave = self.phase * scipy.signal.sawtooth(2 * np.pi * t * self.frequency * self.duration, 0.5).astype(np.float32)
-           samples = self.phase * scipy.signal.sawtooth(
-               2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(
-               np.float32)
-       images.wavePlot(t, wave)
-       output_bytes = (self.volume * samples).tobytes()
-       p = pyaudio.PyAudio()
+    if self.type == "sine":
+        x = np.sin
+    if self.type == "square":
+        x = scipy.signal.square
+    if self.type == "saw":
+        x = scipy.signal.sawtooth
 
-       stream = p.open(format=pyaudio.paFloat32,
-                       channels=1,
-                       rate=self.sampleRate,
-                       output=True)
+#sampling the wave with x being the function that represents the wave's shape
+    samples = self.phase * x(2 * np.pi * np.arange(self.sampleRate * self.duration) * self.frequency / self.sampleRate).astype(np.float32)
+    output_bytes = (self.volume * samples).tobytes()
+    p = pyaudio.PyAudio()
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=self.sampleRate,
+                    output=True)
+    start_time = time.time()
+    stream.write(output_bytes)
+    stream.stop_stream()
+    stream.close()
 
-       start_time = time.time()
-       stream.write(output_bytes)
-       '''
-       stream.stop_stream()
-       stream.close() '''
+    images.wavePlot(samples)
 
 #functions that are called upon pressing buttons in the GUI
 
@@ -109,4 +96,6 @@ def menuTwoHit(type):
 def menuThreeHit(type):
     attributesDict["type"] = str(type)
     osc3 = Wave(**attributesDict)
-    oscillators.append(osc3) '''
+    oscillators.append(osc3)
+   '''
+

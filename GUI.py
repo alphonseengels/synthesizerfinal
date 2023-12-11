@@ -18,7 +18,7 @@ menuText.set("Wave type")
 
 osc1Label = Label(root, text="Oscillator 1")
 osc1Label.pack(side=TOP)
-typeMenu = OptionMenu(root, menuText, "sine", "square", "saw", "triangle", command=lambda type: sound.menuHit(type))
+typeMenu = OptionMenu(root, menuText, "sine", "square", "saw", command=lambda wavetype: sound.menuHit(wavetype))
 typeMenu.pack(side=TOP)
 '''
 osc2Menu = OptionMenu(root, menuText, "sine", "square", "saw", "triangle", command= lambda type: sound.menuTwoHit(type))
@@ -32,6 +32,7 @@ osc3Menu.pack(side = BOTTOM)
 osc2Label = Label(root, text="Oscillator 2")
 osc2Label.pack(side = BOTTOM)
 '''
+
 #populates the buttons by looping through each note in the dictionary and making a button that plays the note
 for i in sound.noteDict:
     note = i

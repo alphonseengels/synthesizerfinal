@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
-def wavePlot(t, wave):
-   graph = plt.plot(t, wave)
+def wavePlot(wave):
+   graph = plt.plot(wave)
    plt.show()
 
 
