@@ -4,7 +4,7 @@ Project Overview:
 This is a simple digital synthesizer. You can chose between one, two, or three oscillators of three different wave types: sine, square, and saw. You can adjust the volume with the built-in slider, and you can see the generated waveform in the IDE.
 
 Installation and Setup Instructions:
-Run GUI.py. 
+Download everything into a zip file. Run GUI.py in PyCharm.
 
 Usage Guide: 
 The GUI window will pop up. To get started, you can press any of the notes (C, C#, D, etc.) to hear a sine wave of the frequency
