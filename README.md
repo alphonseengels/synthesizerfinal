@@ -1,7 +1,7 @@
 READ ME
 
 Project Overview:
-This is a simple digital synthesizer. You can chose between 1, 2, or three oscillators of three different wave types: sine, square, and saw. You can adjust the volume with the built-in slider, and you can see the generated waveform in the IDE.
+This is a simple digital synthesizer. You can chose between one, two, or three oscillators of three different wave types: sine, square, and saw. You can adjust the volume with the built-in slider, and you can see the generated waveform in the IDE.
 
 Installation and Setup Instructions:
 Run GUI.py. 
