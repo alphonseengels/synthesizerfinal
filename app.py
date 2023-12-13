@@ -12,7 +12,11 @@ filter, etc...
 '''
 
 '''
-make a play function, then play osc1 and osc2 at the same time? 
+allow the play function to play multiple oscillators at the same time...
+
+how?
+way 1: somehow add oscillators together and pass the addition to the function? 
+way 2: pass multiple oscillators to the function?
 '''
 
 
